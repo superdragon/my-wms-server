@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.permission.mapper.RoleMapper">
+    <select id="getByAccountId" resultType="com.jiaming.wms.permission.bean.entity.Role">
+        SELECT t2.id, t2.name, t2.create_time FROM wms_account_role t1
+        LEFT JOIN wms_role t2 ON t2.id = t1.role_id
+        WHERE t1.account_id = #{accountId}
+    </select>
+</mapper>

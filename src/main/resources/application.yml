@@ -1,0 +1,129 @@
+server:
+  port: 9001
+  # 解决中文乱码问题
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+app:
+  savePath: E:\03-class\app\jm-wms\static\
+  httpPath: http://localhost:9001/
+  imageMaxSize: 2000000
+  imageTypes: [ png, jpg ]
+  videoMaxSize: 50000000
+  videoTypes: [ mp4 ]
+
+spring:
+  resources:
+    static-locations: [file:E:\03-class\app\jm-wms\static\ ]
+  servlet:
+    multipart:
+      # 单个文件最大允许上传的大小
+      max-file-size: 10MB
+      # 一次上传文件的总大小
+      max-request-size: 100MB
+  mvc:
+    hiddenmethod:
+      filter:
+        # 支持表单方式发送REST请求
+        enabled: true
+  jackson:
+    # SNAKE_CASE
+    # 请求返回的 json 数据结构，驼峰式属性名会自动转换成下划线命名方式。
+    # 请求携带的 json body 数据结果，下划线属性名会自动转换成转驼峰式命名方式。
+    #property-naming-strategy: SNAKE_CASE
+    # 全局设置 @JsonFormat 的格式 pattern，如果是 JDK8 日期类型，需要单独在属性上使用 @JsonFormat
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  ### 配置数据源
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jm-wms?useUnicode=true&serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    ### druid 连接池配置
+    druid:
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，
+      # 执行 validationQuery 检测连接是否有效
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: "SELECT 'x'"
+      # 1.销毁线程会检测连接的间隔时间，如果连接空闲时间大于等于 minEvictableIdleTimeMillis 则关闭物理连接
+      # 2.作为 testWhileIdle 检测依据
+      # 默认值是 1 分钟，单位毫秒
+      min-evictable-idle-time-millis: 60000
+      # 申请连接时执行 validationQuery 检测连接是否有效，做了这个配置会降低性能。默认是 true
+      test-on-borrow: false
+      # 连接池中的 minIdle 数量以内的连接，空闲时间超过 minEvictableIdleTimeMillis，
+      # 则会执行 keepAlive 操作，默认 false
+      keep-alive: false
+      # 初始化连接数
+      initial-size: 10
+      # 最小连接数量
+      min-idle: 10
+      # 最大连接数量
+      max-active: 50
+      ### druid 监控后台 StatViewServlet 配置
+      # https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE
+      stat-view-servlet:
+        enabled: true
+        # 访问 druid 监控后台起始 URL 映射
+        # http://ip:port/druid
+        url-pattern: "/druid/*"
+        # 不允许清空统计数据
+        reset-enable: false
+        # 访问 druid 监控后台的登录用户名和密码
+        login-username: admin
+        login-password: admin9527
+        # 允许访问 druid 监控后台的 IP地址，如果没有配置或者配置为空，允许所有 IP 访问
+        allow: 127.0.0.1
+      ### druid 监控过滤 WebStatFilter配置
+      web-stat-filter:
+        enabled: false
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      filters: stat,wall,slf4j
+      filter:
+        stat:
+          # 开启慢 sql 查询监控
+          log-slow-sql: true
+          # 设置 sql 执行多少毫秒，则认为是慢 sql
+          slow-sql-millis: 1000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+mybatis-plus:
+  configuration:
+    # 在控制台打印 SQL 日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 默认所有表的主键都是自增长模式
+      id-type: auto
+      table-prefix: wms_
+
+logging:
+  file:
+    # 日志文件的名称和存放位置 / : 当前磁盘的根目录
+    name: \app\log.log
+    # 设置单个日志文件大小
+    max-size: 100MB
+    # 设置日志文件保留天数，默认7天
+    max-history: 30
+  pattern:
+    # 设置控制台日志打印格式
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n"
+    # 设置输入到日志文件中打印格式
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n"
+  level:
+    # 默认所有组件的日志级别
+    root: info
+    # 使用包路径设置应用的日志级别
+    com.jiaming: debug
+    # 设置 Spring 的日志级别 debug > info > error
+    org.springframework: info

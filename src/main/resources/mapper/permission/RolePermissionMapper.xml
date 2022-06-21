@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.permission.mapper.RolePermissionMapper">
+    <select id="getPermissionsByRoleIds" resultType="com.jiaming.wms.permission.bean.entity.Permission">
+        SELECT DISTINCT(t2.id),t2.`key`,t2.icon,t2.level_id,t2.title,t2.path,t2.pid,t2.order_no
+        FROM wms_role_permission t1
+        LEFT JOIN wms_permission t2 ON t2.id = t1.permission_id
+        WHERE t1.role_id IN
+        <foreach collection="roleIds" item="roleId" separator="," open="(" close=")">
+            #{roleId}
+        </foreach>
+        ORDER BY t2.order_no
+    </select>
+</mapper>
