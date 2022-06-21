@@ -57,7 +57,7 @@ public class AccountController {
     IPermissionService permissionService;
 
     @ApiOperation("账号密码登录")
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ResultVO<LoginDataVO> login(@RequestParam("name") String loginName,
                                        @RequestParam("password") String loginPwd,
                                        @RequestParam String captchaCode,
@@ -163,7 +163,7 @@ public class AccountController {
     }
 
     @ApiOperation("获取账户信息")
-    @RequestMapping("/get")
+    @PostMapping("/get")
     public ResultVO<Account> get(Long id) {
         Account account = accountService.getById(id);
         return new ResultVO<>(ResultCodeEnum.SUCCESS, account);

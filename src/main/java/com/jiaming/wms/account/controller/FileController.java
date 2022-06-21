@@ -4,6 +4,8 @@ import com.jiaming.wms.account.service.IFileService;
 import com.jiaming.wms.common.response.ResultCodeEnum;
 import com.jiaming.wms.common.response.ResultVO;
 import com.jiaming.wms.config.AppConfig;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * @author dragon
  */
+@Api(tags = "文件上传API")
 @RestController
 @RequestMapping("/file")
 public class FileController {
@@ -31,12 +34,14 @@ public class FileController {
     @Autowired
     IFileService fileService;
 
+    @ApiOperation("上传单张图片")
     @PostMapping("/uploadImage")
     public ResultVO<String> uploadImage(@RequestPart("file") MultipartFile file) {
         String url = fileService.uploadImage(file);
         return new ResultVO<>(ResultCodeEnum.SUCCESS, url);
     }
 
+    @ApiOperation("上传多张图片")
     @PostMapping("/uploadImages")
     public ResultVO<List<String>> uploadImage(@RequestPart("files") MultipartFile[] files) {
         List<String> urls = new ArrayList<>();

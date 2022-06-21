@@ -5,6 +5,8 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
 import com.jiaming.wms.captcha.bean.entity.Captcha;
 import com.jiaming.wms.captcha.service.ICaptchaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import java.io.OutputStream;
 /**
  * @author dragon
  */
+@Api(tags = "验证码API")
 @RestController
 @RequestMapping("/captcha")
 public class CaptchaController {
@@ -25,6 +28,7 @@ public class CaptchaController {
     ICaptchaService captchaService;
 
     // 获取图片验证码，并把图片验证码的内容保存到DB中
+    @ApiOperation("获取验证码")
     @GetMapping("/render")
     public void render(HttpServletResponse response) {
         //定义图形验证码的长和宽

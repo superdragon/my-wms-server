@@ -18,7 +18,8 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
                 // 排除一下请求地址不拦截
                 .excludePathPatterns("/**/login", "/**.jpg",
                         "/**.ico", "/error", "/captcha/**", "/file/**",
-                        "/inStoreList/**", "/inStoreItem/**", "/my_actuator/**");
+                        "/inStoreList/**", "/inStoreItem/**", "/my_actuator/**",
+                        "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**", "/doc.html/**");
         // 如果有多个拦截器，那么可以继续使用 registry.addInterceptor()
     }
 }
