@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.goods.mapper.GoodsMapper">
+
+    <select id="myPage" resultType="com.jiaming.wms.goods.bean.vo.FilterGoodsDataVO">
+        SELECT
+            t1.id,
+            t1.code,
+            t1.brand_id,
+            t1.pack_id,
+            t1.taste_id,
+            t1.name,
+            t1.status,
+            t1.price,
+            t1.inner_price,
+            t1.update_time,
+            t1.create_time,
+            t2.name brand_name,
+            t3.name pack_name,
+            t4.name taste_name
+        FROM wms_goods t1
+            LEFT JOIN wms_goods_brand t2 ON t1.brand_id = t2.id
+            LEFT JOIN wms_goods_pack t3 ON t1.pack_id = t3.id
+            LEFT JOIN wms_goods_taste t4 ON t1.taste_id = t4.id
+        WHERE 1 = 1
+        <if test="filter.keyWord != null and filter.keyWord != ''">
+            AND (t1.name LIKE CONCAT('%', #{filter.keyWord}, '%') OR t1.code LIKE CONCAT('%', #{filter.keyWord}, '%'))
+        </if>
+        <if test="filter.status != null">
+            AND t1.status = #{filter.status}
+        </if>
+        <if test="filter.brandId != null">
+            AND t1.brand_id = #{filter.brandId}
+        </if>
+        <if test="filter.minPrice != null">
+            AND t1.price >= #{filter.minPrice}
+        </if>
+        <if test="filter.maxPrice != null">
+            AND t1.price &lt;= #{filter.maxPrice}
+        </if>
+        ORDER BY t1.id DESC
+    </select>
+
+</mapper>
