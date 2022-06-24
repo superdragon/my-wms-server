@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.safestore.mapper.SafeStoreMapper">
+    <select id="myPage" resultType="com.jiaming.wms.safestore.bean.vo.PageSafeStoreDataVO">
+        SELECT t1.id,
+               t1.store_id,
+               t1.goods_id,
+               t1.safe_num,
+               t1.update_time,
+               t1.create_time,
+               t2.name goods_name,
+               t2.code goods_code,
+               t3.name store_name
+        FROM wms_safe_store t1
+        LEFT JOIN wms_goods t2 ON t2.id = t1.goods_id
+        LEFT JOIN wms_store t3 ON t3.id = t1.store_id
+        WHERE t1.store_id = #{filter.storeId}
+        <if test="filter.name != null and filter.name != ''">
+            AND  (t2.name LIKE CONCAT('%', #{filter.name}, '%')
+            OR t2.code LIKE CONCAT('%', #{filter.name}, '%'))
+        </if>
+        ORDER BY t1.id DESC
+    </select>
+</mapper>

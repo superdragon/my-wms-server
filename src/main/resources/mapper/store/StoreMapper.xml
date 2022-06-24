@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.store.mapper.StoreMapper">
+    <select id="myPage" resultType="com.jiaming.wms.store.bean.vo.PageStoreDataVO">
+        SELECT t1.id,
+               t1.name,
+               t1.con_name,
+               t1.con_phone,
+               t1.prov_id,
+               t1.city_id,
+               t1.safe_num,
+               t1.address,
+               t1.status,
+               t1.update_time,
+               t1.create_time,
+               t2.name prov_name,
+               t3.name city_name
+        FROM wms_store t1
+        LEFT JOIN wms_region t2 ON t1.prov_id = t2.id
+        LEFT JOIN wms_region t3 ON t1.city_id = t3.id
+        WHERE 1 = 1
+        <if test="filter.name != null and filter.name != ''">
+            AND (t1.name LIKE CONCAT('%', #{filter.name}, '%')
+            OR t1.con_name LIKE CONCAT('%', #{filter.name}, '%')
+            OR t1.con_phone LIKE CONCAT('%', #{filter.name}, '%'))
+        </if>
+        ORDER BY t1.id DESC
+    </select>
+</mapper>
