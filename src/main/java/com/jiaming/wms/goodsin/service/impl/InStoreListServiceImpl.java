@@ -76,21 +76,21 @@ public class InStoreListServiceImpl extends ServiceImpl<InStoreListMapper, InSto
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void removeInStore(String id) {
-        // 删除入库基本信息
-        this.removeById(id);
-        // 删除入库商品信息
-        QueryWrapper<InStoreItem> wrapper = Wrappers.query();
-        wrapper.eq("list_id", id);
-        // DELETE FROM in_store_item WHERE list_id = xxxx
-        storeItemService.remove(wrapper);
         // 减少商品入库总量
         // 1. 首先获取当前入库清单的商品明细，以及入库清单基本信息
         InStoreList inStoreList = this.getById(id);
+        QueryWrapper<InStoreItem> wrapper = Wrappers.query();
+        wrapper.eq("list_id", id);
         List<InStoreItem> inStoreItems = storeItemService.list(wrapper);
         for (InStoreItem inStoreItem : inStoreItems) {
             // 2. 减少对应商品的入库总量
             storeGoodsStatService.reduceInTotal(inStoreList.getStoreId(), inStoreItem.getGoodsId(), inStoreItem.getGoodsNum());
         }
+        // 删除入库基本信息
+        this.removeById(id);
+        // 删除入库商品信息
+        // DELETE FROM in_store_item WHERE list_id = xxxx
+        storeItemService.remove(wrapper);
     }
 
     @Override

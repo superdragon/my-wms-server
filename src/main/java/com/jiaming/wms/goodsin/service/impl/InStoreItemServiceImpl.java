@@ -42,10 +42,10 @@ public class InStoreItemServiceImpl extends ServiceImpl<InStoreItemMapper, InSto
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void removeAndStatById(Long storeId, Long itemId) {
-        this.removeById(itemId);
         InStoreItem inStoreItem = this.getById(itemId);
         if (inStoreItem != null) {
             storeGoodsStatService.reduceInTotal(storeId, inStoreItem.getGoodsId(), inStoreItem.getGoodsNum());
         }
+        this.removeById(itemId);
     }
 }

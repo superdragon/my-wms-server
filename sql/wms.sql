@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 24/06/2022 08:55:15
+ Date: 30/06/2022 10:37:54
 */
 
 SET NAMES utf8mb4;
@@ -64,6 +64,33 @@ INSERT INTO `wms_account_role` VALUES (52, 1022, 2, '2022-06-21 10:02:23');
 INSERT INTO `wms_account_role` VALUES (53, 1022, 5, '2022-06-21 10:02:23');
 
 -- ----------------------------
+-- Table structure for wms_employee
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_employee`;
+CREATE TABLE `wms_employee`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `store_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `age` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `gender` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '员工表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wms_employee
+-- ----------------------------
+INSERT INTO `wms_employee` VALUES (1, '小王', '16011111111', 1, 19, 0, 0, '2021-12-26 19:20:48', '2021-12-26 19:20:48');
+INSERT INTO `wms_employee` VALUES (2, '小白', '16022222222', 2, 19, 1, 0, '2021-12-26 19:26:07', '2021-12-26 19:20:49');
+INSERT INTO `wms_employee` VALUES (3, '小刘', '13012345678', 3, 22, 0, 1, '2022-06-30 09:49:26', '2021-12-27 15:56:05');
+INSERT INTO `wms_employee` VALUES (4, '小宝', '18812345678', 6, 19, 0, 1, '2022-06-28 20:42:41', '2022-06-28 20:41:34');
+INSERT INTO `wms_employee` VALUES (5, '小秦', '19912345678', 7, 22, 0, 0, '2022-06-29 19:14:18', '2022-06-29 19:14:18');
+INSERT INTO `wms_employee` VALUES (6, '小郑', '17099999999', 5, 25, 0, 0, '2022-06-30 09:48:48', '2022-06-30 09:48:48');
+
+-- ----------------------------
 -- Table structure for wms_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `wms_goods`;
@@ -81,7 +108,7 @@ CREATE TABLE `wms_goods`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_goods`(`code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_goods
@@ -103,6 +130,7 @@ INSERT INTO `wms_goods` VALUES (14, 'C006', 1, 6, 5, '良品铺子 肉松饼 营
 INSERT INTO `wms_goods` VALUES (17, 'B003', 1, 5, 5, '良品铺子鸭脖子 甜辣味真空小包装 香辣卤味零食休闲小吃熟食190g', 0, 18, 12, '2022-06-20 00:24:28', '2021-12-20 10:00:31');
 INSERT INTO `wms_goods` VALUES (18, 'A9527', 4, 1, 5, '板栗', 0, 100, 90, '2022-06-20 13:56:06', '2022-06-20 13:56:06');
 INSERT INTO `wms_goods` VALUES (19, 'A100', 1, 1, 1, '七里臭干豆腐', 0, 10, 7, '2022-06-21 10:08:23', '2022-06-21 10:08:23');
+INSERT INTO `wms_goods` VALUES (20, 'X001', 10, 9, 10, '小米洗衣机', 1, 100, 80, '2022-06-24 09:50:36', '2022-06-24 09:19:57');
 
 -- ----------------------------
 -- Table structure for wms_goods_brand
@@ -115,7 +143,7 @@ CREATE TABLE `wms_goods_brand`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品品牌' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品品牌' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_goods_brand
@@ -129,6 +157,7 @@ INSERT INTO `wms_goods_brand` VALUES (6, '可口可乐', 0, '2022-06-19 14:18:36
 INSERT INTO `wms_goods_brand` VALUES (7, '百事可乐', 0, '2022-06-19 14:25:48', '2022-06-19 14:19:46');
 INSERT INTO `wms_goods_brand` VALUES (8, '元气森林', 0, '2022-06-19 14:25:57', '2022-06-19 14:19:59');
 INSERT INTO `wms_goods_brand` VALUES (9, '恰恰', 1, '2022-06-21 10:11:45', '2022-06-21 10:10:49');
+INSERT INTO `wms_goods_brand` VALUES (10, '小米', 0, '2022-06-24 09:17:09', '2022-06-24 09:17:09');
 
 -- ----------------------------
 -- Table structure for wms_goods_images
@@ -140,7 +169,7 @@ CREATE TABLE `wms_goods_images`  (
   `image_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 93 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品图片表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_goods_images
@@ -188,6 +217,11 @@ INSERT INTO `wms_goods_images` VALUES (89, 14, 'http://localhost:9001/4a55af2d50
 INSERT INTO `wms_goods_images` VALUES (90, 19, 'http://localhost:9001/e415c794170a474da6283e9562698dea.jpg', '2022-06-21 10:08:23');
 INSERT INTO `wms_goods_images` VALUES (91, 19, 'http://localhost:9001/91bdeed1c3de42b7b97dc8ff13777fae.jpg', '2022-06-21 10:08:23');
 INSERT INTO `wms_goods_images` VALUES (92, 19, 'http://localhost:9001/8399db3daac44de39eeda17beb8d2385.jpg', '2022-06-21 10:08:23');
+INSERT INTO `wms_goods_images` VALUES (95, 20, 'http://localhost:9001/6dd7b3fe303142f083902648f7eb43f9.jpg', '2022-06-24 09:41:48');
+INSERT INTO `wms_goods_images` VALUES (96, 20, 'http://localhost:9001/7a4d7346d52347838c205a180a290aa9.jpg', '2022-06-24 09:41:48');
+INSERT INTO `wms_goods_images` VALUES (97, 20, 'http://localhost:9001/0ed7d7a46acb480ea40cb1534eb60373.jpg', '2022-06-24 09:41:48');
+INSERT INTO `wms_goods_images` VALUES (98, 2, 'http://localhost:9001/4285491a5ae2439c934d95e45c538505.jpg', '2022-06-24 09:54:27');
+INSERT INTO `wms_goods_images` VALUES (99, 2, 'http://localhost:9001/647745f12ec04739b99b6e2ad2d09c9f.jpg', '2022-06-24 09:54:27');
 
 -- ----------------------------
 -- Table structure for wms_goods_pack
@@ -200,7 +234,7 @@ CREATE TABLE `wms_goods_pack`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品包装' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品包装' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_goods_pack
@@ -213,6 +247,7 @@ INSERT INTO `wms_goods_pack` VALUES (5, '盒', 0, '2021-12-16 15:03:10', '2021-1
 INSERT INTO `wms_goods_pack` VALUES (6, '箱', 0, '2021-12-16 15:03:47', '2021-12-16 15:03:36');
 INSERT INTO `wms_goods_pack` VALUES (7, '桶', 0, '2022-06-19 14:28:27', '2022-06-19 14:26:06');
 INSERT INTO `wms_goods_pack` VALUES (8, '礼盒装', 0, '2022-06-21 10:11:07', '2022-06-21 10:11:07');
+INSERT INTO `wms_goods_pack` VALUES (9, '台', 0, '2022-06-24 09:17:16', '2022-06-24 09:17:16');
 
 -- ----------------------------
 -- Table structure for wms_goods_taste
@@ -225,7 +260,7 @@ CREATE TABLE `wms_goods_taste`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品口味' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品口味' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_goods_taste
@@ -239,6 +274,73 @@ INSERT INTO `wms_goods_taste` VALUES (6, '泡椒', 0, '2021-12-16 15:04:42', '20
 INSERT INTO `wms_goods_taste` VALUES (7, '小龙虾', 0, '2022-06-19 14:28:36', '2022-06-19 14:26:13');
 INSERT INTO `wms_goods_taste` VALUES (8, '芥末', 0, '2022-06-19 14:28:47', '2022-06-19 14:28:47');
 INSERT INTO `wms_goods_taste` VALUES (9, '泡菜味', 0, '2022-06-21 10:11:25', '2022-06-21 10:11:25');
+INSERT INTO `wms_goods_taste` VALUES (10, '无', 0, '2022-06-24 09:17:26', '2022-06-24 09:17:26');
+
+-- ----------------------------
+-- Table structure for wms_in_store_item
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_in_store_item`;
+CREATE TABLE `wms_in_store_item`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `list_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `goods_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `goods_num` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品入库清单明细' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wms_in_store_item
+-- ----------------------------
+INSERT INTO `wms_in_store_item` VALUES (6, '2022010515263417311', 3, 40, '2022-01-05 15:26:34', '2022-01-05 15:26:34');
+INSERT INTO `wms_in_store_item` VALUES (7, '2022021114255664711', 3, 100, '2022-02-11 14:25:56', '2022-02-11 14:25:56');
+INSERT INTO `wms_in_store_item` VALUES (8, '2022021114255664711', 4, 180, '2022-02-11 14:25:56', '2022-02-11 14:25:56');
+INSERT INTO `wms_in_store_item` VALUES (9, '2022021114255664711', 5, 300, '2022-02-11 14:25:56', '2022-02-11 14:25:56');
+INSERT INTO `wms_in_store_item` VALUES (10, '2022021117031846433', 1, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (11, '2022021117031846433', 3, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (12, '2022021117031846433', 4, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (13, '2022021117031846433', 6, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (14, '2022021117031846433', 8, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (15, '2022021117031846433', 12, 1000, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_item` VALUES (16, '2022021117304585133', 12, 200, '2022-02-11 17:30:45', '2022-02-11 17:30:45');
+INSERT INTO `wms_in_store_item` VALUES (17, '2022021211075075711', 16, 1000, '2022-02-12 11:07:50', '2022-02-12 11:07:50');
+INSERT INTO `wms_in_store_item` VALUES (18, '2022021211075075711', 13, 1000, '2022-02-12 11:07:50', '2022-02-12 11:07:50');
+INSERT INTO `wms_in_store_item` VALUES (19, '2022021211075075711', 10, 1000, '2022-02-12 11:07:50', '2022-02-12 11:07:50');
+INSERT INTO `wms_in_store_item` VALUES (20, '2022021211083678011', 16, 200, '2022-02-12 11:08:36', '2022-02-12 11:08:36');
+INSERT INTO `wms_in_store_item` VALUES (22, '2022021211193514111', 2, 300, '2022-02-12 11:22:24', '2022-02-12 11:22:24');
+INSERT INTO `wms_in_store_item` VALUES (23, '2022021211193514111', 1, 400, '2022-02-12 11:22:24', '2022-02-12 11:22:24');
+INSERT INTO `wms_in_store_item` VALUES (24, '2022022014260652911', 3, 1000, '2022-02-20 14:26:06', '2022-02-20 14:26:06');
+INSERT INTO `wms_in_store_item` VALUES (25, '2022022015053337633', 2, 500, '2022-02-20 15:05:33', '2022-02-20 15:05:33');
+INSERT INTO `wms_in_store_item` VALUES (26, '2022022015053337633', 7, 500, '2022-02-20 15:05:33', '2022-02-20 15:05:33');
+INSERT INTO `wms_in_store_item` VALUES (28, '2022062911200525811', 3, 1066, '2022-06-29 11:20:05', '2022-06-29 11:20:05');
+
+-- ----------------------------
+-- Table structure for wms_in_store_list
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_in_store_list`;
+CREATE TABLE `wms_in_store_list`  (
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `store_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `employee_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品入库清单' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wms_in_store_list
+-- ----------------------------
+INSERT INTO `wms_in_store_list` VALUES ('2022010515263417311', 1, 1, '2022-01-05 15:26:34', '2022-01-05 15:26:34');
+INSERT INTO `wms_in_store_list` VALUES ('2022021114255664711', 1, 1, '2022-02-11 14:25:56', '2022-02-11 14:25:56');
+INSERT INTO `wms_in_store_list` VALUES ('2022021117031846433', 3, 3, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_in_store_list` VALUES ('2022021117304585133', 3, 3, '2022-02-11 17:30:45', '2022-02-11 17:30:45');
+INSERT INTO `wms_in_store_list` VALUES ('2022021211075075711', 1, 1, '2022-02-12 11:07:50', '2022-02-12 11:07:50');
+INSERT INTO `wms_in_store_list` VALUES ('2022021211083678011', 1, 1, '2022-02-12 11:08:36', '2022-02-12 11:08:36');
+INSERT INTO `wms_in_store_list` VALUES ('2022021211193514111', 1, 1, '2022-02-12 11:19:38', '2022-02-12 11:19:38');
+INSERT INTO `wms_in_store_list` VALUES ('2022022014260652911', 1, 1, '2022-02-20 14:26:06', '2022-02-20 14:26:06');
+INSERT INTO `wms_in_store_list` VALUES ('2022022015053337633', 3, 3, '2022-02-20 15:05:33', '2022-02-20 15:05:33');
+INSERT INTO `wms_in_store_list` VALUES ('2022062911200525811', 1, 1, '2022-06-29 11:20:05', '2022-06-29 11:20:05');
 
 -- ----------------------------
 -- Table structure for wms_permission
@@ -255,7 +357,7 @@ CREATE TABLE `wms_permission`  (
   `order_no` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk`(`key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_permission
@@ -287,6 +389,25 @@ INSERT INTO `wms_permission` VALUES (49, 'store_query', '', 3, '查询仓储', '
 INSERT INTO `wms_permission` VALUES (50, 'store_edit', '', 3, '编辑仓储', '', 48, 2);
 INSERT INTO `wms_permission` VALUES (51, 'set_safe_num', '', 3, '设置安全库存', '', 48, 3);
 INSERT INTO `wms_permission` VALUES (52, 'store_add', '', 3, '添加仓储', '', 48, 4);
+INSERT INTO `wms_permission` VALUES (55, 'emp_mgr', '', 2, '员工管理', '/emp', 29, 4);
+INSERT INTO `wms_permission` VALUES (56, 'emp_query', '', 3, '查询员工信息', '', 55, 1);
+INSERT INTO `wms_permission` VALUES (57, 'emp_edit', '', 3, '编辑员工信息', '', 55, 2);
+INSERT INTO `wms_permission` VALUES (58, 'emp_add', '', 3, '添加员工信息', '', 55, 3);
+INSERT INTO `wms_permission` VALUES (59, 'stock_mgr', 'el-icon-sold-out', 1, '库存管理', '', 0, 5);
+INSERT INTO `wms_permission` VALUES (60, 'goods_in', '', 2, '商品入库', '/goodsIn', 59, 1);
+INSERT INTO `wms_permission` VALUES (61, 'goods_in_query', '', 3, '查询商品入库信息', '', 60, 1);
+INSERT INTO `wms_permission` VALUES (62, 'goods_in_add', '', 3, '添加商品入库信息', '', 60, 2);
+INSERT INTO `wms_permission` VALUES (63, 'goods_in_edit', '', 3, '编辑商品入库信息', '', 60, 3);
+INSERT INTO `wms_permission` VALUES (64, 'goods_out', '', 2, '商品出库', '/goodsOut', 59, 2);
+INSERT INTO `wms_permission` VALUES (65, 'goods_out_query', '', 3, '查询商品出库', '', 64, 1);
+INSERT INTO `wms_permission` VALUES (66, 'goods_out_add', '', 3, '添加商品出库', '', 64, 2);
+INSERT INTO `wms_permission` VALUES (67, 'goods_out_edit', '', 3, '编辑商品出库', '', 64, 3);
+INSERT INTO `wms_permission` VALUES (68, 'stock_transfer', '', 2, '库存调拨', '/transfer', 59, 3);
+INSERT INTO `wms_permission` VALUES (69, 'stock_transfer_query', '', 3, '查询调拨清单', '', 68, 1);
+INSERT INTO `wms_permission` VALUES (70, 'stock_transfer_add', '', 3, '创建调拨清单', '', 68, 2);
+INSERT INTO `wms_permission` VALUES (71, 'stock_transfer_edit', '', 3, '编辑调拨清单', '', 68, 3);
+INSERT INTO `wms_permission` VALUES (72, 'stock_check', '', 2, '库存盘点', '/check', 59, 4);
+INSERT INTO `wms_permission` VALUES (73, 'stock_check_query', '', 3, '查看库存盘点数据', '', 72, 1);
 
 -- ----------------------------
 -- Table structure for wms_region
@@ -4123,7 +4244,7 @@ CREATE TABLE `wms_role_permission`  (
   `permission_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_id`(`role_id`, `permission_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 384 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 461 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色权限关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_role_permission
@@ -4141,33 +4262,52 @@ INSERT INTO `wms_role_permission` VALUES (302, 2, 28);
 INSERT INTO `wms_role_permission` VALUES (295, 2, 43);
 INSERT INTO `wms_role_permission` VALUES (299, 2, 44);
 INSERT INTO `wms_role_permission` VALUES (303, 2, 45);
-INSERT INTO `wms_role_permission` VALUES (371, 4, 5);
-INSERT INTO `wms_role_permission` VALUES (372, 4, 6);
-INSERT INTO `wms_role_permission` VALUES (376, 4, 7);
-INSERT INTO `wms_role_permission` VALUES (380, 4, 8);
-INSERT INTO `wms_role_permission` VALUES (373, 4, 23);
-INSERT INTO `wms_role_permission` VALUES (374, 4, 24);
-INSERT INTO `wms_role_permission` VALUES (377, 4, 25);
-INSERT INTO `wms_role_permission` VALUES (378, 4, 26);
-INSERT INTO `wms_role_permission` VALUES (381, 4, 27);
-INSERT INTO `wms_role_permission` VALUES (382, 4, 28);
-INSERT INTO `wms_role_permission` VALUES (357, 4, 29);
-INSERT INTO `wms_role_permission` VALUES (358, 4, 30);
-INSERT INTO `wms_role_permission` VALUES (359, 4, 31);
-INSERT INTO `wms_role_permission` VALUES (360, 4, 32);
-INSERT INTO `wms_role_permission` VALUES (362, 4, 33);
-INSERT INTO `wms_role_permission` VALUES (363, 4, 34);
-INSERT INTO `wms_role_permission` VALUES (364, 4, 35);
-INSERT INTO `wms_role_permission` VALUES (375, 4, 43);
-INSERT INTO `wms_role_permission` VALUES (379, 4, 44);
-INSERT INTO `wms_role_permission` VALUES (383, 4, 45);
-INSERT INTO `wms_role_permission` VALUES (361, 4, 46);
-INSERT INTO `wms_role_permission` VALUES (365, 4, 47);
-INSERT INTO `wms_role_permission` VALUES (366, 4, 48);
-INSERT INTO `wms_role_permission` VALUES (367, 4, 49);
-INSERT INTO `wms_role_permission` VALUES (368, 4, 50);
-INSERT INTO `wms_role_permission` VALUES (369, 4, 51);
-INSERT INTO `wms_role_permission` VALUES (370, 4, 52);
+INSERT INTO `wms_role_permission` VALUES (448, 4, 5);
+INSERT INTO `wms_role_permission` VALUES (449, 4, 6);
+INSERT INTO `wms_role_permission` VALUES (453, 4, 7);
+INSERT INTO `wms_role_permission` VALUES (457, 4, 8);
+INSERT INTO `wms_role_permission` VALUES (450, 4, 23);
+INSERT INTO `wms_role_permission` VALUES (451, 4, 24);
+INSERT INTO `wms_role_permission` VALUES (454, 4, 25);
+INSERT INTO `wms_role_permission` VALUES (455, 4, 26);
+INSERT INTO `wms_role_permission` VALUES (458, 4, 27);
+INSERT INTO `wms_role_permission` VALUES (459, 4, 28);
+INSERT INTO `wms_role_permission` VALUES (415, 4, 29);
+INSERT INTO `wms_role_permission` VALUES (416, 4, 30);
+INSERT INTO `wms_role_permission` VALUES (417, 4, 31);
+INSERT INTO `wms_role_permission` VALUES (418, 4, 32);
+INSERT INTO `wms_role_permission` VALUES (420, 4, 33);
+INSERT INTO `wms_role_permission` VALUES (421, 4, 34);
+INSERT INTO `wms_role_permission` VALUES (422, 4, 35);
+INSERT INTO `wms_role_permission` VALUES (452, 4, 43);
+INSERT INTO `wms_role_permission` VALUES (456, 4, 44);
+INSERT INTO `wms_role_permission` VALUES (460, 4, 45);
+INSERT INTO `wms_role_permission` VALUES (419, 4, 46);
+INSERT INTO `wms_role_permission` VALUES (423, 4, 47);
+INSERT INTO `wms_role_permission` VALUES (424, 4, 48);
+INSERT INTO `wms_role_permission` VALUES (425, 4, 49);
+INSERT INTO `wms_role_permission` VALUES (426, 4, 50);
+INSERT INTO `wms_role_permission` VALUES (427, 4, 51);
+INSERT INTO `wms_role_permission` VALUES (428, 4, 52);
+INSERT INTO `wms_role_permission` VALUES (429, 4, 55);
+INSERT INTO `wms_role_permission` VALUES (430, 4, 56);
+INSERT INTO `wms_role_permission` VALUES (431, 4, 57);
+INSERT INTO `wms_role_permission` VALUES (432, 4, 58);
+INSERT INTO `wms_role_permission` VALUES (433, 4, 59);
+INSERT INTO `wms_role_permission` VALUES (434, 4, 60);
+INSERT INTO `wms_role_permission` VALUES (435, 4, 61);
+INSERT INTO `wms_role_permission` VALUES (436, 4, 62);
+INSERT INTO `wms_role_permission` VALUES (437, 4, 63);
+INSERT INTO `wms_role_permission` VALUES (438, 4, 64);
+INSERT INTO `wms_role_permission` VALUES (439, 4, 65);
+INSERT INTO `wms_role_permission` VALUES (440, 4, 66);
+INSERT INTO `wms_role_permission` VALUES (441, 4, 67);
+INSERT INTO `wms_role_permission` VALUES (442, 4, 68);
+INSERT INTO `wms_role_permission` VALUES (443, 4, 69);
+INSERT INTO `wms_role_permission` VALUES (444, 4, 70);
+INSERT INTO `wms_role_permission` VALUES (445, 4, 71);
+INSERT INTO `wms_role_permission` VALUES (446, 4, 72);
+INSERT INTO `wms_role_permission` VALUES (447, 4, 73);
 INSERT INTO `wms_role_permission` VALUES (260, 5, 29);
 INSERT INTO `wms_role_permission` VALUES (261, 5, 30);
 INSERT INTO `wms_role_permission` VALUES (262, 5, 31);
@@ -4191,7 +4331,7 @@ CREATE TABLE `wms_safe_store`  (
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_id`(`store_id`, `goods_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库商品安全库存阈值' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_safe_store
@@ -4201,6 +4341,7 @@ INSERT INTO `wms_safe_store` VALUES (5, 4, 16, 2000, '2021-12-28 15:05:01', '202
 INSERT INTO `wms_safe_store` VALUES (6, 1, 1, 500, '2022-02-12 11:28:58', '2022-02-12 11:28:58');
 INSERT INTO `wms_safe_store` VALUES (7, 5, 3, 500, '2022-06-10 09:26:47', '2022-06-10 09:24:12');
 INSERT INTO `wms_safe_store` VALUES (8, 5, 4, 300, '2022-06-10 09:37:03', '2022-06-10 09:37:03');
+INSERT INTO `wms_safe_store` VALUES (10, 3, 3, 800, '2022-06-24 10:01:02', '2022-06-24 10:01:02');
 
 -- ----------------------------
 -- Table structure for wms_store
@@ -4219,7 +4360,7 @@ CREATE TABLE `wms_store`  (
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wms_store
@@ -4230,5 +4371,46 @@ INSERT INTO `wms_store` VALUES (3, '石家庄仓', '张石', '12012345678', 1000
 INSERT INTO `wms_store` VALUES (4, '沧州仓', '小李', '18088888888', 10000003, 10000045, '河北省沧州XXXX', 0, 80, '2021-12-28 14:51:37', '2021-12-28 14:51:25');
 INSERT INTO `wms_store` VALUES (5, '郑州仓', '小兰', '180111111111', 10000016, 10000184, '大学路17号', 0, 100, '2022-06-10 09:23:21', '2022-06-10 09:23:21');
 INSERT INTO `wms_store` VALUES (6, '保定仓', '旺财', '18100000000', 10000003, 10000042, '保定仓XXXX', 0, 100, '2022-06-23 16:55:48', '2022-06-23 16:50:41');
+INSERT INTO `wms_store` VALUES (7, '秦皇岛仓', '小涛', '18912345678', 10000003, 10000039, '临漳XXXXXXXX', 0, 500, '2022-06-24 09:56:40', '2022-06-24 09:56:40');
+
+-- ----------------------------
+-- Table structure for wms_store_goods_stat
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_store_goods_stat`;
+CREATE TABLE `wms_store_goods_stat`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `goods_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '入库商品ID',
+  `store_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '入库仓库ID',
+  `in_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品入库总量',
+  `out_total` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '商品出库总量',
+  `outting_total` bigint(20) NOT NULL DEFAULT 0 COMMENT '商品待出库总量',
+  `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uk_id`(`goods_id`, `store_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '仓库商品统计表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wms_store_goods_stat
+-- ----------------------------
+INSERT INTO `wms_store_goods_stat` VALUES (1, 1, 3, 1300, 500, 0, '2022-02-20 15:06:14', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (2, 3, 3, 1000, 0, 0, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (3, 4, 3, 1000, 300, 0, '2022-02-20 15:06:14', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (4, 6, 3, 2000, 460, 0, '2022-02-20 15:06:14', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (5, 8, 3, 1000, 0, 0, '2022-02-11 17:03:18', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (6, 12, 3, 1200, 500, 0, '2022-02-20 15:13:29', '2022-02-11 17:03:18');
+INSERT INTO `wms_store_goods_stat` VALUES (7, 16, 1, 1200, 100, 0, '2022-02-14 20:13:19', '2022-02-12 11:07:50');
+INSERT INTO `wms_store_goods_stat` VALUES (8, 13, 1, 1000, 330, 120, '2022-02-20 15:21:32', '2022-02-12 11:07:50');
+INSERT INTO `wms_store_goods_stat` VALUES (9, 10, 1, 1000, 300, 0, '2022-02-17 10:40:20', '2022-02-12 11:07:50');
+INSERT INTO `wms_store_goods_stat` VALUES (10, 2, 1, 511, 200, 80, '2022-02-20 14:31:56', '2022-02-12 11:17:12');
+INSERT INTO `wms_store_goods_stat` VALUES (11, 1, 1, 400, 400, 0, '2022-02-20 14:31:56', '2022-02-12 11:22:11');
+INSERT INTO `wms_store_goods_stat` VALUES (12, 14, 3, 200, 0, 0, '2022-02-20 14:33:58', '2022-02-14 19:31:49');
+INSERT INTO `wms_store_goods_stat` VALUES (13, 10, 3, 300, 0, 0, '2022-02-14 19:31:49', '2022-02-14 19:31:49');
+INSERT INTO `wms_store_goods_stat` VALUES (14, 13, 3, 100, 0, 0, '2022-02-14 20:13:29', '2022-02-14 20:13:29');
+INSERT INTO `wms_store_goods_stat` VALUES (15, 3, 1, 2066, 123, 0, '2022-02-20 14:31:56', '2022-02-20 14:26:06');
+INSERT INTO `wms_store_goods_stat` VALUES (16, 2, 3, 500, 300, 0, '2022-02-20 15:06:14', '2022-02-20 15:05:33');
+INSERT INTO `wms_store_goods_stat` VALUES (17, 7, 3, 500, 330, 0, '2022-02-20 15:06:14', '2022-02-20 15:05:33');
+INSERT INTO `wms_store_goods_stat` VALUES (18, 12, 1, 500, 100, 0, '2022-02-20 15:21:31', '2022-02-20 15:13:33');
+INSERT INTO `wms_store_goods_stat` VALUES (19, 18, 3, 1000, 0, 0, '2022-06-29 18:56:26', '2022-06-29 18:56:26');
 
 SET FOREIGN_KEY_CHECKS = 1;

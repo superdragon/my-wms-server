@@ -133,7 +133,13 @@ public class StoreGoodsStatServiceImpl
         // 如果有，则把当前入库的总量减去要移除此次入库商品数量，做update
         if (storeGoodsStat != null) {
             storeGoodsStat.setInTotal(storeGoodsStat.getInTotal() - goodsNum);
-            this.updateById(storeGoodsStat);
+            if (storeGoodsStat.getInTotal() == 0) {
+                // 如果商品库存为0，那么移除库存记录
+                this.removeById(storeGoodsStat.getId());
+            } else {
+                // 如果商品库存不为0，那么做更新操作
+                this.updateById(storeGoodsStat);
+            }
         }
     }
 
@@ -163,6 +169,7 @@ public class StoreGoodsStatServiceImpl
             // 当前库存总额(包含待出库总量)
             long amount = 0;
             for (StoreGoodsStatDataVO storeGoodsStatDataVO : goodsList) {
+                // 仓库每个商品实际库存余量
                 long temp = storeGoodsStatDataVO.getInTotal() - storeGoodsStatDataVO.getOutTotal();
                 stockStat += temp;
                 amount += temp * storeGoodsStatDataVO.getPrice();
