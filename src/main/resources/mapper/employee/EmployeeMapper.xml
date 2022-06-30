@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.employee.mapper.EmployeeMapper">
+    <select id="myPage" resultType="com.jiaming.wms.employee.bean.vo.PageEmpDataVO">
+        SELECT t1.id,
+               t1.name,
+               t1.phone,
+               t1.store_id,
+               t1.age,
+               t1.gender,
+               t1.status,
+               t1.update_time,
+               t1.create_time,
+               t2.name store_name
+        FROM wms_employee t1
+        LEFT JOIN wms_store t2 ON t1.store_id = t2.id
+        WHERE 1 = 1
+        <if test="filter.name != null and filter.name != ''">
+            AND (t1.name LIKE CONCAT('%', #{filter.name} '%')
+            OR t1.phone LIKE CONCAT('%', #{filter.name} '%'))
+        </if>
+        ORDER BY t1.id DESC
+    </select>
+</mapper>

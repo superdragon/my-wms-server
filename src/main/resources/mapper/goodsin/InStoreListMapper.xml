@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.goodsin.mapper.InStoreListMapper">
+    <select id="myPage" resultType="com.jiaming.wms.goodsin.bean.vo.PageInStoreListDataVO">
+        SELECT
+                t1.id,
+                t1.store_id,
+                t1.employee_id,
+                t1.update_time,
+                t1.create_time,
+                t2.name store_name,
+                t3.name emp_name
+        FROM wms_in_store_list t1
+        LEFT JOIN wms_store t2 on t1.store_id = t2.id
+        LEFT JOIN wms_employee t3 on t1.employee_id = t3.id
+        WHERE 1 = 1
+        <if test="filter.id != null and filter.id != ''">
+            AND t1.id = #{filter.id}
+        </if>
+        <if test="filter.storeId != null">
+            AND t1.store_id = #{filter.storeId}
+        </if>
+        <if test="filter.sDate != null">
+            AND t1.create_time >= #{filter.sDate}
+        </if>
+        <if test="filter.eDate != null">
+            AND t1.create_time &lt;= #{filter.eDate}
+        </if>
+        ORDER BY t1.create_time DESC
+    </select>
+</mapper>
