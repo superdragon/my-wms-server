@@ -30,7 +30,7 @@ public interface IStoreGoodsStatService extends IService<StoreGoodsStat> {
 
     void reduceOutTotal(Long shipStoreId, Long goodsId, Long goodsNum);
 
-    List<StoreGoodsStat> getNumByTrade(Long storeId, List<Long> goodsIdList);
+    List<StoreGoodsStat> getGoodsNumByStoreId(Long storeId, List<Long> goodsIdList);
 
     void plusOutTotal(Long storeId, Long goodsId, Long goodsNum);
 

@@ -116,7 +116,7 @@ logging:
     # 设置日志文件保留天数，默认7天
     max-history: 30
   pattern:
-    # 设置控制台日志打印格式
+    # 设置控制台日志打印格式 0
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n"
     # 设置输入到日志文件中打印格式
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n"

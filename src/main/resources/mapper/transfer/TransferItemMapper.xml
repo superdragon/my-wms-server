@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.transfer.mapper.TransferItemMapper">
+    <select id="myPage" resultType="com.jiaming.wms.transfer.bean.vo.PageTransferItemDataVO">
+        SELECT t2.id,
+        t2.code,
+        t2.brand_id,
+        t2.pack_id,
+        t2.taste_id,
+        t2.name,
+        t2.status,
+        t2.price,
+        t2.inner_price,
+        t2.update_time,
+        t2.create_time,
+        t3.name brand_name,
+        t4.name taste_name,
+        t5.name pack_name,
+        t1.goods_num,
+        t1.id inStore_item_id
+        FROM wms_transfer_item t1
+        LEFT JOIN wms_goods t2 ON t2.id = t1.goods_id
+        LEFT JOIN wms_goods_brand t3 ON t3.id = t2.brand_id
+        LEFT JOIN wms_goods_taste t4 ON t4.id = t2.taste_id
+        LEFT JOIN wms_goods_pack t5 ON t5.id = t2.pack_id
+        WHERE t1.list_id = #{filter.id}
+    </select>
+</mapper>

@@ -114,7 +114,7 @@ public class StoreGoodsStatServiceImpl
     }
 
     @Override
-    public List<StoreGoodsStat> getNumByTrade(Long storeId, List<Long> goodsIdList) {
+    public List<StoreGoodsStat> getGoodsNumByStoreId(Long storeId, List<Long> goodsIdList) {
         QueryWrapper<StoreGoodsStat> query = Wrappers.query();
         query.eq("store_id", storeId);
         query.in("goods_id", goodsIdList);

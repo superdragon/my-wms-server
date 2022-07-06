@@ -51,15 +51,15 @@ public class StoreGoodsStatController {
     }
 
     @ApiOperation("查看仓储商品库存")
-    @PostMapping("/getNumByTrade")
-    public ResultVO<List<StoreGoodsStat>> getNumByTrade(@RequestParam Long storeId,
-                                                        @RequestParam String goodsIds) {
+    @PostMapping("/getGoodsNumByStoreId")
+    public ResultVO<List<StoreGoodsStat>> getGoodsNumByStoreId(@RequestParam Long storeId,
+                                                               @RequestParam String goodsIds) {
         String[] goodsIdstr = goodsIds.split(",");
         List<Long> goodsIdList = new ArrayList<>();
         for (String s : goodsIdstr) {
             goodsIdList.add(Long.parseLong(s));
         }
-        List<StoreGoodsStat> data = storeGoodsStatService.getNumByTrade(storeId, goodsIdList);
+        List<StoreGoodsStat> data = storeGoodsStatService.getGoodsNumByStoreId(storeId, goodsIdList);
         return new ResultVO<>(ResultCodeEnum.SUCCESS, data);
     }
 }

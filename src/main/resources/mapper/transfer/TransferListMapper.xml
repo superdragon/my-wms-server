@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.transfer.mapper.TransferListMapper">
+    <select id="myPage" resultType="com.jiaming.wms.transfer.bean.vo.PageTransferListDataVO">
+        SELECT t1.id,
+               t1.ship_store_id,
+               t1.receive_store_id,
+               t1.ship_emp_id,
+               t1.ship_time,
+               t1.receive_time,
+               t1.`status`,
+               t1.create_time,
+               t2.name ship_store_name,
+               t3.name receive_store_name,
+               t4.name ship_emp_name
+        FROM wms_transfer_list t1
+        LEFT JOIN wms_store t2 ON t2.id = t1.ship_store_id
+        LEFT JOIN wms_store t3 ON t3.id = t1.receive_store_id
+        LEFT JOIN wms_employee t4 ON t4.id = t1.ship_emp_id
+        WHERE 1 = 1
+        <if test="filter.id != null and filter.id != ''">
+            AND t1.id = #{filter.id}
+        </if>
+        <if test="filter.shipStoreId != null and filter.shipStoreId > 0">
+            AND t1.ship_store_id = #{filter.shipStoreId}
+        </if>
+        <if test="filter.receiveStoreId != null and filter.receiveStoreId > 0">
+            AND t1.receive_store_id = #{filter.receiveStoreId}
+        </if>
+        ORDER BY t1.create_time DESC
+    </select>
+</mapper>
