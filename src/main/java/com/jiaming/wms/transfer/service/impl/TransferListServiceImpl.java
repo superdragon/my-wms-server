@@ -9,15 +9,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jiaming.wms.common.entity.MyPage;
 import com.jiaming.wms.goodsin.bean.vo.AddInStoreItemVO;
+import com.jiaming.wms.mq.TopicConstants;
 import com.jiaming.wms.stat.service.IStoreGoodsStatService;
 import com.jiaming.wms.transfer.bean.entity.TransferItem;
 import com.jiaming.wms.transfer.bean.entity.TransferList;
-import com.jiaming.wms.transfer.bean.vo.AddTransferListVO;
-import com.jiaming.wms.transfer.bean.vo.PageTransferListDataVO;
-import com.jiaming.wms.transfer.bean.vo.PageTransferListVO;
+import com.jiaming.wms.transfer.bean.vo.*;
 import com.jiaming.wms.transfer.mapper.TransferListMapper;
 import com.jiaming.wms.transfer.service.ITransferItemService;
 import com.jiaming.wms.transfer.service.ITransferListService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,7 @@ import java.util.List;
 /**
  * @author dragon
  */
+@Slf4j
 @Service
 public class TransferListServiceImpl extends ServiceImpl<TransferListMapper, TransferList>
         implements ITransferListService {
@@ -38,6 +42,9 @@ public class TransferListServiceImpl extends ServiceImpl<TransferListMapper, Tra
 
     @Autowired
     IStoreGoodsStatService storeGoodsStatService;
+
+    @Autowired
+    RocketMQTemplate rocketMQTemplate;
 
     // 保存调拨清单及明细，同时锁定调拨商品数量
     @Override
@@ -77,6 +84,24 @@ public class TransferListServiceImpl extends ServiceImpl<TransferListMapper, Tra
         transferItemService.saveBatch(items);
 
         // 异步发送创建调拨订单消息
+        rocketMQTemplate.asyncSend(TopicConstants.TODAY_TRANSFER_TOTAL, id, new SendCallback() {
+            //消息发送成功的回调
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                // 如果有业务是必须在消息投递成功后处理，那么就必须放在这个方法里面写
+                log.info("库存调拨订单消息发送成功 订单号={} 发送结果={}", id, sendResult);
+            }
+
+            //消息发送失败的回调
+            @Override
+            public void onException(Throwable throwable) {
+                // 如果消息发送失败，如何追溯这条失败的消息
+                // 1. 使用log记录到文件中。缺点：查询不方便
+                // 2. 放到ES，推荐这一种，保证既方便查询又不容易丢失数据
+                // 3. 放Redis，保证方便查询，但是不能保证数据不丢失
+                log.error("库存调拨订单消息发送失败 订单号={} 错误原因={}", id, throwable.getLocalizedMessage());
+            }
+        });
     }
 
     @Override
@@ -157,5 +182,17 @@ public class TransferListServiceImpl extends ServiceImpl<TransferListMapper, Tra
         }
         updateWrapper.eq("id", id);
         this.update(updateWrapper);
+    }
+
+    @Override
+    public TransferDetailVO detail(String id) {
+        // 获取调拨订单基本信息
+        PageTransferListDataVO info = this.baseMapper.detail(id);
+        // 获取调拨订单明细
+        List<PageTransferItemDataVO> items = transferItemService.detail(id);
+        TransferDetailVO transferDetailVO = new TransferDetailVO();
+        transferDetailVO.setInfo(info);
+        transferDetailVO.setItems(items);
+        return transferDetailVO;
     }
 }

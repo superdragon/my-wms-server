@@ -81,4 +81,21 @@
     <select id="stat" resultType="com.jiaming.wms.stat.bean.vo.StockCheckStatDataVO">
 
     </select>
+
+    <select id="getAllGoods" resultType="com.jiaming.wms.stat.bo.StoreGoodsInitDataBO">
+        SELECT t1.store_id,
+        t2.id,
+        t2.code,
+        t2.brand_id,
+        t2.pack_id,
+        t2.taste_id,
+        t2.`name`,
+        t2.`status`,
+        t2.price,
+        t2.inner_price,
+        t2.update_time,
+        t2.create_time
+        FROM wms_store_goods_stat t1
+        JOIN wms_goods t2 ON t1.goods_id = t2.id
+    </select>
 </mapper>

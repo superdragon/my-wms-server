@@ -7,6 +7,7 @@ import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatDataVO;
 import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatVO;
 import com.jiaming.wms.stat.bean.vo.StockCheckStatDataVO;
 import com.jiaming.wms.stat.bean.vo.StoreGoodsStatDataVO;
+import com.jiaming.wms.stat.bo.StoreGoodsInitDataBO;
 
 import java.util.List;
 
@@ -37,4 +38,6 @@ public interface IStoreGoodsStatService extends IService<StoreGoodsStat> {
     void reduceInTotal(Long storeId, Long goodsId, Long goodsNum);
 
     List<StockCheckStatDataVO> stat();
+
+    List<StoreGoodsInitDataBO> getAllGoods();
 }

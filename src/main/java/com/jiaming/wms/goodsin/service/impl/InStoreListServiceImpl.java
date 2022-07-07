@@ -15,9 +15,14 @@ import com.jiaming.wms.goodsin.bean.vo.*;
 import com.jiaming.wms.goodsin.mapper.InStoreListMapper;
 import com.jiaming.wms.goodsin.service.IInStoreItemService;
 import com.jiaming.wms.goodsin.service.IInStoreListService;
+import com.jiaming.wms.mq.TopicConstants;
 import com.jiaming.wms.stat.service.IStoreGoodsStatService;
 import com.jiaming.wms.store.bean.entity.Store;
 import com.jiaming.wms.store.service.IStoreService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +35,7 @@ import java.util.List;
 /**
  * @author dragon
  */
+@Slf4j
 @Service
 public class InStoreListServiceImpl extends ServiceImpl<InStoreListMapper, InStoreList> implements IInStoreListService {
 
@@ -44,6 +50,9 @@ public class InStoreListServiceImpl extends ServiceImpl<InStoreListMapper, InSto
 
     @Autowired
     IStoreGoodsStatService storeGoodsStatService;
+
+    @Autowired
+    RocketMQTemplate rocketMQTemplate;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -71,6 +80,26 @@ public class InStoreListServiceImpl extends ServiceImpl<InStoreListMapper, InSto
             storeGoodsStatService.increaseInTotal(listVO.getStoreId(), goods.getGoodsId(), goods.getGoodsNum());
         }
         storeItemService.saveBatch(items);
+
+        // 异步发送创建入库订单消息
+        rocketMQTemplate.asyncSend(TopicConstants.TODAY_INSTORE_TOTAL, id, new SendCallback() {
+            //消息发送成功的回调
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                // 如果有业务是必须在消息投递成功后处理，那么就必须放在这个方法里面写
+                log.info("商品入库订单消息发送成功 订单号={} 发送结果={}", id, sendResult);
+            }
+
+            //消息发送失败的回调
+            @Override
+            public void onException(Throwable throwable) {
+                // 如果消息发送失败，如何追溯这条失败的消息
+                // 1. 使用log记录到文件中。缺点：查询不方便
+                // 2. 放到ES，推荐这一种，保证既方便查询又不容易丢失数据
+                // 3. 放Redis，保证方便查询，但是不能保证数据不丢失
+                log.error("商品入库订单消息发送失败 订单号={} 错误原因={}", id, throwable.getLocalizedMessage());
+            }
+        });
     }
 
     @Override

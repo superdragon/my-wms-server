@@ -11,6 +11,7 @@ import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatDataVO;
 import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatVO;
 import com.jiaming.wms.stat.bean.vo.StockCheckStatDataVO;
 import com.jiaming.wms.stat.bean.vo.StoreGoodsStatDataVO;
+import com.jiaming.wms.stat.bo.StoreGoodsInitDataBO;
 import com.jiaming.wms.stat.mapper.StoreGoodsStatMapper;
 import com.jiaming.wms.stat.service.IStoreGoodsStatService;
 import com.jiaming.wms.store.bean.entity.Store;
@@ -186,5 +187,10 @@ public class StoreGoodsStatServiceImpl
             data.add(stockCheckStatDataVO);
         }
         return data;
+    }
+
+    @Override
+    public List<StoreGoodsInitDataBO> getAllGoods() {
+        return this.baseMapper.getAllGoods();
     }
 }

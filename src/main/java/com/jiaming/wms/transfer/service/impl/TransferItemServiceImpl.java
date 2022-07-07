@@ -11,6 +11,8 @@ import com.jiaming.wms.transfer.mapper.TransferItemMapper;
 import com.jiaming.wms.transfer.service.ITransferItemService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author dragon
  */
@@ -32,5 +34,10 @@ public class TransferItemServiceImpl extends ServiceImpl<TransferItemMapper, Tra
         result.setPageNum(page.getCurrent());
         result.setItems(page.getRecords());
         return result;
+    }
+
+    @Override
+    public List<PageTransferItemDataVO> detail(String id) {
+        return this.baseMapper.detail(id);
     }
 }

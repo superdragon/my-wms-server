@@ -7,6 +7,7 @@ import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatDataVO;
 import com.jiaming.wms.stat.bean.vo.PageStoreGoodsStatVO;
 import com.jiaming.wms.stat.bean.vo.StockCheckStatDataVO;
 import com.jiaming.wms.stat.bean.vo.StoreGoodsStatDataVO;
+import com.jiaming.wms.stat.bo.StoreGoodsInitDataBO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,6 @@ public interface StoreGoodsStatMapper extends BaseMapper<StoreGoodsStat> {
                       @Param("goodsNum") Long goodsNum);
 
     StockCheckStatDataVO stat(Long id);
+
+    List<StoreGoodsInitDataBO> getAllGoods();
 }

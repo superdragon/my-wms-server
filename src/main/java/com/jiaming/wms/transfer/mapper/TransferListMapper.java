@@ -14,4 +14,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface TransferListMapper extends BaseMapper<TransferList> {
     IPage<PageTransferListDataVO> myPage(IPage<?> page, @Param("filter") PageTransferListVO listVO);
+
+    PageTransferListDataVO detail(String id);
 }

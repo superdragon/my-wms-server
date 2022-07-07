@@ -7,6 +7,11 @@ server:
       force: true
       charset: UTF-8
 
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: springbootGroup
+
 app:
   savePath: E:\03-class\app\jm-wms\static\
   httpPath: http://localhost:9001/

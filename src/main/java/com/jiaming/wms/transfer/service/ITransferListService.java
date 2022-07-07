@@ -6,6 +6,7 @@ import com.jiaming.wms.transfer.bean.entity.TransferList;
 import com.jiaming.wms.transfer.bean.vo.AddTransferListVO;
 import com.jiaming.wms.transfer.bean.vo.PageTransferListDataVO;
 import com.jiaming.wms.transfer.bean.vo.PageTransferListVO;
+import com.jiaming.wms.transfer.bean.vo.TransferDetailVO;
 
 /**
  * @author dragon
@@ -16,4 +17,6 @@ public interface ITransferListService extends IService<TransferList> {
     MyPage<PageTransferListDataVO> pageTransferList(PageTransferListVO listVO);
 
     void updateStatus(String id, Integer status);
+
+    TransferDetailVO detail(String id);
 }
