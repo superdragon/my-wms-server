@@ -12,4 +12,7 @@ public class TodayStatDataVO implements Serializable {
     private static final long serialVersionUID = -8818495713143899642L;
     private Long transferTotal;
     private Long inStoreTotal;
+    private Long tradeAmount;
+    private Long tradeTotal;
+    private Long userTotal;
 }

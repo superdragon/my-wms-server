@@ -21,4 +21,18 @@ public class RedisKeyUtil {
         String now = DateUtil.format(new Date(), "yyyyMMdd");
         return RedisKey.STAT_INSTORE_PREFIX + now;
     }
+
+    public static String getTodayTradeStat() {
+        String now = DateUtil.format(new Date(), "yyyyMMdd");
+        return RedisKey.STAT_TRADE_PREFIX + now;
+    }
+
+    public static String getTodayTradeUserStat() {
+        String now = DateUtil.format(new Date(), "yyyyMMdd");
+        return RedisKey.STAT_TRADE_USER_PREFIX + now;
+    }
+
+    public static String getPaySuccessNotify() {
+        return RedisKey.PAY_SUCCESS_NOTIFY;
+    }
 }

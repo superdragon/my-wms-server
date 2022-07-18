@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiaming.wms.stat.mapper.StatTradeMapper">
+    <select id="statTradeData" resultType="java.util.Map">
+        SELECT stat_date, SUM(total) sale_total, SUM(amount) sale_amount FROM wms_stat_trade
+        WHERE stat_date >= #{sDate} AND stat_date &lt;= #{eDate} GROUP BY stat_date
+    </select>
+
+    <select id="statStoreTradeData" resultType="java.util.Map">
+        SELECT store_id, SUM(amount) sale_amount FROM wms_stat_trade
+        WHERE stat_date >= #{sDate} AND stat_date &lt;= #{eDate} GROUP BY store_id
+    </select>
+</mapper>
